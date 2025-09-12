@@ -27,6 +27,6 @@ struct BookListItemView: View {
 }
 
 #Preview {
-    let book = Book(title: "The Fellowship of The Ring", image: "lotr_fellowship", description: "The first book in the trilogy")
+    let book = Book(title: "The Fellowship of The Ring", image: "lotr_fellowship", description: "The first book in the trilogy", author: "Thomas J. Brow", year: 2000, category: "Adventure")
     BookListItemView(book: book)
 }

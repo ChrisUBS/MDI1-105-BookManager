@@ -12,4 +12,7 @@ struct Book: Identifiable {
     var title: String
     var image: String
     var description: String
+    var author: String
+    var year: Int
+    var category: String
 }
