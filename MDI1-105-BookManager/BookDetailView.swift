@@ -8,53 +8,70 @@
 import SwiftUI
 
 struct BookDetailView: View {
-    
-    var book: Book
+    @State var book: Book
+    @State private var showingEdit = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Text("Details for:")
-                    .padding()
-                HStack {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                
+                HStack(alignment: .top, spacing: 16) {
                     Image(book.image)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 60)
-                        .padding(.horizontal)
-                    Text(book.title)
-                        .font(.system(size: 30))
-                        .fontWeight(.bold)
+                        .frame(width: 120)
+                        .cornerRadius(8)
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(book.title)
+                            .font(.title)
+                            .fontWeight(.bold)
+                        
+                        Text("by \(book.author)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        
+                        Text(book.description)
+                            .font(.body)
+                            .padding(.top, 4)
+                    }
+                    Spacer()
                 }
-                Text("Description")
-                    .fontWeight(.bold)
-                    .padding(.top)
-                Text(book.description)
                 
-                Text("Author")
-                    .fontWeight(.bold)
-                    .padding(.top)
-                Text(book.author)
+                Divider()
                 
-                Text("Year")
-                    .fontWeight(.bold)
-                    .padding(.top)
-                Text(String(book.year))
-                
-                Text("Category")
-                    .fontWeight(.bold)
-                    .padding(.top)
-                Text(book.category)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("My Review")
+                        .font(.headline)
+                    
+                    HStack(spacing: 2) {
+                        ForEach(1...5, id: \.self) { i in
+                            Image(systemName: i <= Int(book.rating.rounded()) ? "star.fill" : "star")
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                    
+                    Text(book.review)
+                        .font(.body)
+                        .padding(.top, 4)
+                }
                 
                 Spacer()
-            } // END - VStack
-            .navigationTitle(book.title)
-            .navigationBarTitleDisplayMode(.inline)
-        } // END - Navigation Stack
+            }
+            .padding()
+        }
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Edit") {
+                    showingEdit = true
+                }
+            }
+        }
+        .sheet(isPresented: $showingEdit) {
+            EditBookView(book: $book)
+        }
     }
 }
 
-#Preview {
-    let book = Book(title: "The Fellowship of The Ring", image: "lotr_fellowship", description: "The first book in the trilogy", author: "Thomas J. Brow", year: 2000, category: "Adventure")
-    BookDetailView(book: book)
-}

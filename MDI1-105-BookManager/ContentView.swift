@@ -19,7 +19,7 @@ struct ContentView: View {
                     BookListItemView(book: book)
                 }
             }
-            .navigationTitle("Book Manager")
+            .navigationTitle("My Books")
         }
     }
 }

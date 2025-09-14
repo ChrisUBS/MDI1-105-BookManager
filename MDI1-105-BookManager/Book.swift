@@ -15,4 +15,7 @@ struct Book: Identifiable {
     var author: String
     var year: Int
     var category: String
+    var rating: Double
+    var review: String
+    var status: String
 }
