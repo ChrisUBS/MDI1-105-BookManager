@@ -10,12 +10,12 @@ import SwiftData
 
 struct ContentView: View {
     
-    let books = getBooks()
+    @State var books = getBooks()
     
     var body: some View {
         NavigationStack {
-            List(books, id: \.self.id) { book in
-                NavigationLink(destination: BookDetailView(book: book)) {
+            List($books, id: \.self.id) { $book in
+                NavigationLink(destination: BookDetailView(book: $book)) {
                     BookListItemView(book: book)
                 }
             }
@@ -27,3 +27,6 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+// jorge.marin@sdgku.edu
+// Inbox in Canvas

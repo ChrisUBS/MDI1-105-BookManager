@@ -21,6 +21,7 @@ struct BookListItemView: View {
                 Text(book.title)
                 Text(book.description)
                     .font(.system(size: 12))
+                    .padding(.leading, 5)
             }
         }
     }

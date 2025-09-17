@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BookDetailView: View {
-    @State var book: Book
+    @Binding var book: Book
     @State private var showingEdit = false
     
     var body: some View {
