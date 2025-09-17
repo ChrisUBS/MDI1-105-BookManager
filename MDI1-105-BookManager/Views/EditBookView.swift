@@ -10,29 +10,35 @@ import SwiftUI
 struct EditBookView: View {
     @Binding var book: Book
     @Environment(\.dismiss) var dismiss
+    @State private var draftBook: Book
     
     let statuses = ["Planned", "Reading", "Finished"]
+    
+    init(book: Binding<Book>) {
+        self._book = book
+        self._draftBook = State(initialValue: book.wrappedValue)
+    }
     
     var body: some View {
         NavigationStack {
             Form {
                 Section("BOOK DETAILS") {
-                    TextField("Title", text: $book.title)
-                    TextField("Author", text: $book.author)
+                    TextField("Title", text: $draftBook.title)
+                    TextField("Author", text: $draftBook.author)
                     
-                    Picker("Status", selection: $book.status) {
+                    Picker("Status", selection: $draftBook.status) {
                         ForEach(statuses, id: \.self) { status in
                             Text(status)
                         }
                     }
                     
-                    TextField("Description", text: $book.description)
+                    TextField("Description", text: $draftBook.description)
                 }
                 
                 Section("MY RATING & REVIEW") {
-                    Stepper("Rating: \(book.rating, specifier: "%.1f")", value: $book.rating, in: 0...5, step: 0.5)
+                    Stepper("Rating: \(draftBook.rating, specifier: "%.1f")", value: $draftBook.rating, in: 0...5, step: 0.5)
                     
-                    TextEditor(text: $book.review)
+                    TextEditor(text: $draftBook.review)
                         .frame(height: 100)
                 }
             }
@@ -40,7 +46,13 @@ struct EditBookView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        dismiss() // solo cierra el formulario
+                        book = draftBook
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
                     }
                 }
             }
