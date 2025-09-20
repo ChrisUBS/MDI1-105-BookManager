@@ -36,7 +36,8 @@ struct EditBookView: View {
                 }
                 
                 Section("MY RATING & REVIEW") {
-                    Stepper("Rating: \(draftBook.rating, specifier: "%.1f")", value: $draftBook.rating, in: 0...5, step: 0.5)
+//                    Stepper("Rating: \(draftBook.rating, specifier: "%.1f")", value: $draftBook.rating, in: 0...5, step: 0.5)
+                    StartRatingView(rating: $draftBook.rating)
                     
                     TextEditor(text: $draftBook.review)
                         .frame(height: 100)

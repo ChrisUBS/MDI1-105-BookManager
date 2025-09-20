@@ -13,13 +13,15 @@ struct ContentView: View {
     @State var books = getBooks()
     
     var body: some View {
-        NavigationStack {
-            List($books, id: \.self.id) { $book in
-                NavigationLink(destination: BookDetailView(book: $book)) {
-                    BookListItemView(book: book)
-                }
+        TabView {
+            BookListView(books: $books)
+            .tabItem {
+                Label("Books", systemImage: "books.vertical.fill")
             }
-            .navigationTitle("My Books")
+            FavoritesView(books: $books)
+                .tabItem{
+                    Label("Favorites", systemImage: "heart.fill")
+                }
         }
     }
 }

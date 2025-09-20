@@ -15,7 +15,8 @@ struct Book: Identifiable {
     var author: String
     var year: Int
     var category: String
-    var rating: Double
+    var rating: Int
     var review: String
     var status: String
+    var isFavorite: Bool = false
 }

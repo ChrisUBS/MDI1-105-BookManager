@@ -46,7 +46,7 @@ struct BookDetailView: View {
                     
                     HStack(spacing: 2) {
                         ForEach(1...5, id: \.self) { i in
-                            Image(systemName: i <= Int(book.rating.rounded()) ? "star.fill" : "star")
+                            Image(systemName: i <= book.rating ? "star.fill" : "star")
                                 .foregroundColor(.yellow)
                         }
                     }
@@ -55,7 +55,16 @@ struct BookDetailView: View {
                         .font(.body)
                         .padding(.top, 4)
                 }
-                
+                HStack {
+                    Spacer()
+                    Toggle(isOn: $book.isFavorite) {
+                        Image(systemName: book.isFavorite ? "heart.fill" : "heart")
+                            .renderingMode(.original)
+                    }
+                    .toggleStyle(.button)
+                    .font(.title)
+                    .accessibilityLabel(book.isFavorite ? "Remove from favorites" : "Add to favorites")
+                }
                 Spacer()
             }
             .padding()
